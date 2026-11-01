@@ -1,0 +1,26 @@
+# Ignorar todo o conteúdo da pasta analyze, preservando o .gitkeep para versionar o diretório
+analyze/*
+!analyze/.gitkeep
+
+# Arquivos do sistema operacional
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+.DS_Store
+._*
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.bak
