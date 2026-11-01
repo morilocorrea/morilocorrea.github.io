@@ -73,6 +73,13 @@
             padding: 0;
         }
 
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+            position: relative;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -83,7 +90,21 @@
             color: var(--color-text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
+        }
+
+        p, li, h1, h2, h3, h4, span, a {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        code {
+            word-break: break-all;
+            overflow-wrap: anywhere;
+            font-size: 0.9em;
+            background: rgba(30, 136, 229, 0.08);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
         /* ==========================================================================
@@ -91,6 +112,7 @@
            ========================================================================== */
         header {
             position: relative;
+            width: 100%;
             background-color: var(--color-dark-bg);
             color: var(--color-text-inverse);
             padding: 84px 24px 124px;
@@ -98,6 +120,7 @@
             border-bottom-left-radius: 48px;
             border-bottom-right-radius: 48px;
             overflow: hidden;
+            contain: paint;
             box-shadow: 0 20px 40px rgba(20, 24, 32, 0.25);
         }
 
@@ -171,6 +194,7 @@
             color: var(--color-primary-dark);
             background: linear-gradient(135deg, #A2C9FF 0%, #1E88E5 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -188,19 +212,24 @@
            ========================================================================== */
         .container {
             max-width: 1200px;
+            width: 100%;
             margin: -60px auto 80px;
             padding: 0 24px;
             display: grid;
-            grid-template-columns: 290px 1fr;
+            grid-template-columns: 290px minmax(0, 1fr);
             gap: 40px;
             position: relative;
             z-index: 3;
+            box-sizing: border-box;
         }
 
         /* ==========================================================================
            SIDEBAR DE NAVEGAÇÃO RÁPIDA (Sticky Menu)
            ========================================================================== */
         aside {
+            min-width: 0;
+            width: 100%;
+            box-sizing: border-box;
             position: sticky;
             top: 28px;
             height: fit-content;
@@ -230,6 +259,16 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
+        }
+
+        .nav-links li {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .nav-links li::before {
+            display: none !important;
+            content: none !important;
         }
 
         .nav-links a {
@@ -271,6 +310,9 @@
            CARTÃO DE CONTEÚDO PRINCIPAL (Main)
            ========================================================================== */
         main {
+            min-width: 0;
+            width: 100%;
+            box-sizing: border-box;
             background-color: var(--color-surface-white);
             border: 1px solid var(--color-border-hairline);
             border-radius: 32px;
@@ -411,7 +453,7 @@
         /* ==========================================================================
            LISTAS ESTILIZADAS COM BULLETS PERSONALIZADOS
            ========================================================================== */
-        ul {
+        main ul {
             list-style: none;
             padding-left: 0;
             margin-bottom: 20px;
@@ -420,7 +462,7 @@
             gap: 14px;
         }
 
-        li {
+        main li {
             position: relative;
             padding-left: 32px;
             color: var(--color-text-secondary);
@@ -429,7 +471,7 @@
         }
 
         /* Ícone de verificação elegante como marcador */
-        li::before {
+        main li::before {
             content: "";
             position: absolute;
             left: 4px;
@@ -543,6 +585,9 @@
             border-radius: 100px;
             transition: var(--transition-smooth);
             box-shadow: 0 4px 14px rgba(30, 136, 229, 0.35);
+            max-width: 100%;
+            word-break: break-all;
+            box-sizing: border-box;
         }
 
         .contact-email svg {
@@ -621,14 +666,16 @@
            ========================================================================== */
         @media (max-width: 1024px) {
             .container {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 32px;
+                margin: -48px auto 60px;
             }
 
             aside {
                 position: relative;
                 top: 0;
                 order: 2;
-                margin-top: -20px;
+                margin-top: 0;
             }
 
             .nav-links {
@@ -639,45 +686,83 @@
 
             main {
                 order: 1;
-                padding: 44px 36px;
+                padding: 44px 32px;
             }
         }
 
         @media (max-width: 640px) {
             header {
-                padding: 60px 20px 96px;
-                border-radius: 0 0 32px 32px;
+                padding: 44px 20px 48px;
+                border-radius: 0 0 28px 28px;
+            }
+
+            header .logo-badge {
+                font-size: 0.82rem;
+                padding: 6px 14px;
+                margin-bottom: 16px;
             }
 
             header h1 {
-                font-size: 2.2rem;
+                font-size: clamp(1.8rem, 6.5vw, 2.2rem);
+                line-height: 1.22;
+                margin-bottom: 12px;
+            }
+
+            header p {
+                font-size: 0.96rem;
+                line-height: 1.55;
             }
 
             .container {
-                margin-top: -48px;
-                padding: 0 16px;
+                margin: 16px auto 48px;
+                padding: 0 14px;
+                gap: 20px;
             }
 
             main {
-                padding: 32px 20px;
-                border-radius: 24px;
+                padding: 28px 16px;
+                border-radius: 20px;
             }
 
             .meta-info-card {
                 flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+                padding: 14px 16px;
+                margin-bottom: 36px;
+            }
+
+            .meta-group {
+                flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
-                padding: 16px;
+                gap: 8px;
+            }
+
+            .meta-item {
+                font-size: 0.84rem;
+            }
+
+            .meta-badge {
+                align-self: flex-start;
+                font-size: 0.78rem;
+                padding: 5px 12px;
+            }
+
+            section {
+                margin-bottom: 36px;
+                padding-bottom: 32px;
+                scroll-margin-top: 24px;
             }
 
             section h2 {
-                font-size: 1.35rem;
-                gap: 12px;
+                font-size: 1.25rem;
+                gap: 10px;
+                margin-bottom: 16px;
             }
 
             .section-icon {
-                width: 38px;
-                height: 38px;
+                width: 36px;
+                height: 36px;
                 border-radius: 10px;
             }
 
@@ -686,16 +771,77 @@
                 height: 18px;
             }
 
-            li {
-                padding-left: 28px;
-                font-size: 0.98rem;
+            section p {
+                font-size: 0.96rem;
+                line-height: 1.65;
+            }
+
+            main ul {
+                gap: 12px;
+            }
+
+            main li {
+                padding-left: 26px;
+                font-size: 0.94rem;
+                line-height: 1.6;
+            }
+
+            main li::before {
+                top: 5px;
+                width: 14px;
+                height: 14px;
+            }
+
+            .callout-box {
+                padding: 18px 16px;
+                border-radius: 14px;
+                margin: 20px 0;
+            }
+
+            .callout-box h4 {
+                font-size: 1rem;
+            }
+
+            .callout-box p {
+                font-size: 0.92rem;
+            }
+
+            .contact-box {
+                padding: 24px 16px;
+                border-radius: 16px;
+            }
+
+            .contact-box p {
+                font-size: 0.96rem;
             }
 
             .contact-email {
                 width: 100%;
                 justify-content: center;
-                padding: 12px 20px;
-                font-size: 1rem;
+                padding: 12px 16px;
+                font-size: 0.92rem;
+                box-sizing: border-box;
+                word-break: break-all;
+                white-space: normal;
+                text-align: center;
+            }
+
+            aside {
+                padding: 20px 16px;
+                border-radius: 20px;
+            }
+
+            .nav-links {
+                gap: 8px;
+            }
+
+            .nav-links a {
+                padding: 8px 12px;
+                font-size: 0.88rem;
+            }
+
+            footer {
+                padding: 48px 16px;
             }
         }
     </style>
